@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ใบมอบตัวและสัญญาค้ำประกัน - {{ app.prefix_th }}{{ app.first_name_th }} {{ app.last_name_th }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Sarabun', 'TH Sarabun New', Tahoma, sans-serif;
+            color: #1e293b;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            padding: 20px;
+        }
+
+        .no-print-bar {
+            max-width: 210mm;
+            margin: 0 auto 15px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-print {
+            background-color: #059669;
+            color: #ffffff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-print:hover {
+            background-color: #047857;
+        }
+
+        .btn-back {
+            background-color: #e2e8f0;
+            color: #334155;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .page-container {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 15mm 20mm;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .header-title {
+            text-align: center;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #059669;
+            padding-bottom: 10px;
+        }
+
+        .header-title h1 {
+            font-size: 19px;
+            font-weight: 700;
+            color: #065f46;
+        }
+
+        .header-title h2 {
+            font-size: 14.5px;
+            font-weight: 600;
+            color: #334155;
+            margin-top: 2px;
+        }
+
+        .header-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            padding: 8px 15px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .student-id-badge {
+            font-family: monospace;
+            font-size: 16px;
+            font-weight: bold;
+            color: #065f46;
+            letter-spacing: 1.5px;
+            background: #ffffff;
+            padding: 3px 10px;
+            border-radius: 4px;
+            border: 1px solid #10b981;
+        }
+
+        .contract-body {
+            font-size: 12.5px;
+            line-height: 1.65;
+            text-align: justify;
+        }
+
+        .contract-paragraph {
+            text-indent: 30px;
+            margin-bottom: 8px;
+        }
+
+        .underline-text {
+            font-weight: 600;
+            border-bottom: 1px dotted #475569;
+            padding: 0 4px;
+            color: #0f172a;
+        }
+
+        .clause-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 10px 16px;
+            margin: 10px 0;
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .clause-item {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .signatures-grid {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .sig-block {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+
+        .sig-dotted {
+            margin-top: 38px;
+            border-top: 1px dotted #475569;
+            padding-top: 5px;
+        }
+
+        .footer-bar {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 10px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .no-print-bar {
+                display: none !important;
+            }
+            .page-container {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                padding: 10mm 15mm;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 10mm;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="no-print-bar">
+        <div>
+            <span style="font-weight: 600; font-size: 16px; color: #1e293b;">ใบมอบตัวและสัญญาค้ำประกัน (Enrollment Agreement)</span>
+            <span style="font-size: 13px; color: #64748b; margin-left: 10px;">เอกสารสำคัญสำหรับงานทะเบียน</span>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <a href="/" class="btn-back">← กลับหน้าระบบ</a>
+            <button onclick="window.print()" class="btn-print">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                พิมพ์ / บันทึก PDF
+            </button>
+        </div>
+    </div>
+
+    <div class="page-container">
+        <!-- Title -->
+        <div class="header-title">
+            <h1>ใบมอบตัวและสัญญาค้ำประกันการเป็นนักเรียน นักศึกษา</h1>
+            <h2>วิทยาลัยอาชีวศึกษาเทคโนโลยีสารสนเทศ สำนักงานคณะกรรมการการอาชีวศึกษา</h2>
+            <p style="font-size: 12px; color: #64748b; margin-top: 2px;">ทำขึ้น ณ วิทยาลัยอาชีวศึกษาเทคโนโลยีสารสนเทศ วันที่ {{ today_date }}</p>
+        </div>
+
+        <!-- Student Info Header -->
+        <div class="header-box">
+            <div>
+                <strong>รหัสนักศึกษาที่ออกโดยระบบ:</strong>
+                <span class="student-id-badge">{{ app.student_id or 'รอออกรหัสในวันมอบตัว' }}</span>
+            </div>
+            <div>
+                <strong>ระดับชั้น:</strong> {{ app.education_level }} 1 |
+                <strong>สาขาวิชา:</strong> <span style="font-weight: bold; color: #065f46;">{{ app.first_choice_major }}</span>
+            </div>
+        </div>
+
+        <!-- Contract Details -->
+        <div class="contract-body">
+            <p class="contract-paragraph">
+                สัญญานี้ทำขึ้นระหว่าง <span class="underline-text">{{ app.guardian_name or '..........................................................' }}</span>
+                อายุ <span class="underline-text">.....</span> ปี เกี่ยวข้องเป็น <span class="underline-text">{{ app.guardian_relation or 'ผู้ปกครอง' }}</span>
+                อยู่บ้านเลขที่ <span class="underline-text">{{ app.address_no }}</span> หมู่ที่ <span class="underline-text">{{ app.moo or '-' }}</span>
+                ตำบล/แขวง <span class="underline-text">{{ app.subdistrict }}</span> อำเภอ/เขต <span class="underline-text">{{ app.district }}</span>
+                จังหวัด <span class="underline-text">{{ app.province }}</span> รหัสไปรษณีย์ <span class="underline-text">{{ app.postal_code }}</span>
+                โทรศัพท์ <span class="underline-text">{{ app.guardian_phone or app.phone }}</span> ซึ่งต่อไปนี้เรียกว่า <strong>"ผู้ปกครอง / ผู้ค้ำประกัน"</strong> ฝ่ายหนึ่ง
+            </p>
+
+            <p class="contract-paragraph">
+                กับ <strong>วิทยาลัยอาชีวศึกษาเทคโนโลยีสารสนเทศ</strong> โดยผู้อำนวยการวิทยาลัยฯ หรือผู้ได้รับมอบหมาย ซึ่งต่อไปนี้เรียกว่า <strong>"สถานศึกษา"</strong> อีกฝ่ายหนึ่ง
+            </p>
+
+            <p class="contract-paragraph">
+                โดยที่ผู้ปกครองได้นำ <span class="underline-text" style="font-size: 13.5px;">{{ app.prefix_th }}{{ app.first_name_th }} {{ app.last_name_th }}</span>
+                เลขประจำตัวประชาชน <span class="underline-text" style="font-family: monospace;">{{ app.citizen_id }}</span>
+                เข้ามามอบตัวเป็นนักเรียน/นักศึกษาในระดับชั้น <strong>{{ app.education_level }}</strong> สาขาวิชา <strong>{{ app.first_choice_major }}</strong>
+                คู่สัญญาจึงได้ตกลงทำสัญญาไว้ต่อกันดังมีข้อความต่อไปนี้:
+            </p>
+
+            <!-- Clauses -->
+            <div class="clause-box">
+                <div class="clause-item">
+                    <strong>ข้อ 1.</strong>
+                    <span>ผู้ปกครองและนักเรียน/นักศึกษา ยินยอมปฏิบัติตามระเบียบ ข้อบังคับ วินัย และคำสั่งของสถานศึกษาอย่างเคร่งครัดทั้งในและนอกบริเวณวิทยาลัยฯ</span>
+                </div>
+                <div class="clause-item">
+                    <strong>ข้อ 2.</strong>
+                    <span>นักเรียน/นักศึกษา จะตั้งใจศึกษาเล่าเรียน ไม่ประพฤติตนให้เสื่อมเสียชื่อเสียง ไม่เกี่ยวข้องกับสิ่งเสพติด การพนัน หรือการทะเลาะวิวาททุกกรณี</span>
+                </div>
+                <div class="clause-item">
+                    <strong>ข้อ 3.</strong>
+                    <span>หากนักเรียน/นักศึกษา ก่อความเสียหายแก่ทรัพย์สินของทางสถานศึกษาหรือผู้อื่น ผู้ปกครองยินยอมชดใช้ค่าเสียหายเต็มจำนวนทันทีที่ได้รับแจ้ง</span>
+                </div>
+                <div class="clause-item">
+                    <strong>ข้อ 4.</strong>
+                    <span>หากผู้สมัครหรือผู้ปกครองให้ข้อมูลหรือเอกสารหลักฐานอันเป็นเท็จ สถานศึกษามีสิทธิ์เพิกถอนสภาพการเป็นนักเรียน/นักศึกษาทันทีโดยไม่มีเงื่อนไข</span>
+                </div>
+                <div class="clause-item">
+                    <strong>ข้อ 5.</strong>
+                    <span>ผู้ปกครองยินยอมให้สถานศึกษาประสานงาน รายงานพฤติกรรม และผลการเรียนผ่านช่องทางอิเล็กทรอนิกส์ (LINE OA / SMS) ตามเบอร์โทรที่ระบุไว้</span>
+                </div>
+            </div>
+
+            <p class="contract-paragraph">
+                สัญญานี้ทำขึ้นเป็นสองฉบับมีข้อความถูกต้องตรงกัน ทั้งสองฝ่ายได้อ่านและเข้าใจข้อความโดยละเอียดแล้ว จึงได้ลงลายมือชื่อไว้เป็นหลักฐานต่อหน้าพยาน
+            </p>
+        </div>
+
+        <!-- Signatures -->
+        <div class="signatures-grid">
+            <div class="sig-block">
+                <div class="sig-dotted">
+                    ลงชื่อ..........................................................นักเรียน/นักศึกษา<br>
+                    ( {{ app.prefix_th }}{{ app.first_name_th }} {{ app.last_name_th }} )<br>
+                    ผู้มอบตัว
+                </div>
+            </div>
+            <div class="sig-block">
+                <div class="sig-dotted">
+                    ลงชื่อ..........................................................ผู้ปกครอง<br>
+                    ( {{ app.guardian_name or '..........................................................' }} )<br>
+                    ผู้ค้ำประกัน
+                </div>
+            </div>
+            <div class="sig-block">
+                <div class="sig-dotted">
+                    ลงชื่อ..........................................................พยาน / อาจารย์ที่ปรึกษา<br>
+                    (..........................................................)<br>
+                    ครูที่ปรึกษาประจำสาขาวิชา
+                </div>
+            </div>
+            <div class="sig-block">
+                <div class="sig-dotted">
+                    ลงชื่อ..........................................................ผู้รับมอบตัว<br>
+                    ( นายสมศักดิ์ มั่นใจวิชาการ )<br>
+                    หัวหน้างานทะเบียนและประมวลผล
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-bar">
+            <div>
+                <img src="{{ qr_code }}" alt="QR" style="width: 55px; height: 55px;" />
+            </div>
+            <div style="text-align: right;">
+                {{ barcode_svg|safe }}
+                <div style="font-size: 10px; color: #64748b; margin-top: 2px;">
+                    เอกสารนี้ออกโดยระบบรับสมัครเรียนออนไลน์อัตโนมัติ (Online Admission System)
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

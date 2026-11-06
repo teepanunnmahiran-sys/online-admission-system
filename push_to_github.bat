@@ -1,38 +1,39 @@
 @echo off
 chcp 65001 > nul
-title เชื่อมต่อและอัปโหลดขึ้น GitHub (Push to GitHub)
+title นำระบบรับสมัครเรียนขึ้น GitHub (Push to GitHub)
 echo =========================================================================
-echo   เชื่อมต่อและเปิดเว็บรับสมัครเรียนออนไลน์บน GitHub Pages
+echo   กำลังนำโค้ดขึ้น GitHub Repository:
+echo   https://github.com/teepanunnmahiran-sys/online-admission-system.git
 echo =========================================================================
 echo.
-echo ขั้นตอน:
-echo 1. เข้าเว็บ https://github.com/new แล้วสร้าง Repository ใหม่ (แนะนำตั้งเป็น Public)
-echo 2. คัดลอก URL ของ Repository มาวางในช่องด้านล่างนี้
+echo * หมายเหตุ: หากมีหน้าต่าง Git เด้งขึ้นมาถามการเข้าสู่ระบบ
+echo   ให้คลิกปุ่ม "Sign in with your browser" แล้วกดยืนยัน Authorize ในเบราว์เซอร์
 echo.
-set /p REPO_URL="กรุณาวาง URL ของ GitHub Repository (เช่น https://github.com/username/repo.git): "
-
-if "%REPO_URL%"=="" (
-    echo ไม่ได้ระบุ URL ยกเลิกการทำงาน
-    pause
-    exit /b
-)
-
-echo.
-echo กำลังเชื่อมต่อ Remote และ Push ขึ้น GitHub (branch: main)...
 "C:\Users\TL\.gemini\antigravity\scratch\git\cmd\git.exe" remote remove origin 2>nul
-"C:\Users\TL\.gemini\antigravity\scratch\git\cmd\git.exe" remote add origin %REPO_URL%
+"C:\Users\TL\.gemini\antigravity\scratch\git\cmd\git.exe" remote add origin https://github.com/teepanunnmahiran-sys/online-admission-system.git
 "C:\Users\TL\.gemini\antigravity\scratch\git\cmd\git.exe" branch -M main
 "C:\Users\TL\.gemini\antigravity\scratch\git\cmd\git.exe" push -u origin main
 
+if %ERRORLEVEL% EQU 0 (
+    echo.
+    echo =========================================================================
+    echo   [สำเร็จ] นำโค้ดขึ้น GitHub เรียบร้อยแล้ว!
+    echo =========================================================================
+    echo.
+    echo ขั้นตอนสุดท้ายเพื่อเปิดเว็บ GitHub Pages:
+    echo 1. เปิดเว็บ: https://github.com/teepanunnmahiran-sys/online-admission-system/settings/pages
+    echo 2. ที่หัวข้อ "Branch" ให้เลือก "main" และเลือก "/ (root)"
+    echo 3. กดปุ่ม "Save"
+    echo 4. รอประมาณ 1 นาที เว็บจะเปิดให้ทุกคนใช้งานได้ฟรีที่:
+    echo    https://teepanunnmahiran-sys.github.io/online-admission-system/
+    echo =========================================================================
+) else (
+    echo.
+    echo =========================================================================
+    echo   หากยังไม่สำเร็จ กรุณาลองเปิด PowerShell แล้วรันคำสั่ง:
+    echo   cd C:\Users\TL\.gemini\antigravity\scratch\online_admission_system
+    echo   git push -u origin main
+    echo =========================================================================
+)
 echo.
-echo =========================================================================
-echo   Push ขึ้น GitHub สำเร็จแล้ว!
-echo =========================================================================
-echo ขั้นตอนเปิดใช้งานหน้าเว็บ GitHub Pages:
-echo 1. ไปที่หน้า GitHub Repository ของคุณ
-echo 2. คลิกแท็บ "Settings" (ด้านบน)
-echo 3. คลิกเมนู "Pages" (แถบซ้ายมือ)
-echo 4. ที่หัวข้อ "Branch" ให้เลือก "main" และโฟลเดอร์ "/ (root)" แล้วกด "Save"
-echo 5. รอประมาณ 1-2 นาที คุณจะได้ลิงก์เว็บไซต์ใช้งานได้ฟรีทันที!
-echo =========================================================================
 pause
